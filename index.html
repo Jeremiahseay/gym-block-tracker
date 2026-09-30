@@ -50,7 +50,7 @@ pre{white-space:pre-wrap;word-wrap:break-word}
 <div class="footerbar">
   <button class="btn" id="historyBtn">History</button>
   <button class="btn primary" id="homeBtn">Workouts</button>
-  <button class="btn" id="techBtn">Techniques</button>
+  <button class="btn" id="reviewBtn">Weekly Review</button>
 </div>
 
 <dialog id="modal">
@@ -58,8 +58,12 @@ pre{white-space:pre-wrap;word-wrap:break-word}
   <form method="dialog"><button class="btn primary" style="width:100%;margin-top:12px">Close</button></form>
 </dialog>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 <script>
 let PROGRAM=null;
+let SUPA=null;
+let CLOUD_USER=null;
 const SKEY='blockTrackerStateV1';
 const state=JSON.parse(localStorage.getItem(SKEY)||'{}');
 state.profile ||= 'you'; state.week ||= 1; state.logs ||= {}; state.block ||= 1;
@@ -134,7 +138,15 @@ function findPrevious(day,name){
   }
   return '';
 }
-window.finishDay=function(day){
+window.finishDay=async function(day){
+  if(SUPA && CLOUD_USER){
+    const p=PROGRAM.profiles[state.profile], d=p.days[day];
+    const {data:session,error}=await SUPA.from('workout_sessions').insert({user_id:CLOUD_USER.id,block_number:state.block,week_number:state.week,workout_day:day,completed_at:new Date().toISOString()}).select().single();
+    if(error){alert('Cloud save failed: '+error.message);return;}
+    const rows=[];
+    for(const ex of d.exercises){const l=state.logs[weekKey(state.profile,state.week,day,ex.name)];(l?.sets||[]).forEach((s,i)=>{if(s.weight!==''||s.reps!=='')rows.push({session_id:session.id,exercise_name:ex.name,set_number:i+1,weight:s.weight===''?null:Number(s.weight),reps:s.reps===''?null:Number(s.reps),rir:s.rir===''?null:Number(s.rir),intensity_technique:techniqueFor(state.profile,state.week,ex.name),notes:l.note||null});});}
+    if(rows.length) await SUPA.from('exercise_sets').insert(rows);
+  }
   const key=`done|b${state.block}|${state.profile}|w${state.week}|${day}`;
   state.logs[key]={completedAt:new Date().toISOString()}; save();
   alert('Workout saved.');
@@ -163,11 +175,73 @@ function showTech(){
 }
 document.getElementById('historyBtn').onclick=showHistory;
 document.getElementById('homeBtn').onclick=showWorkouts;
-document.getElementById('techBtn').onclick=showTech;
+document.getElementById('reviewBtn').onclick=showWeeklyReview;
 document.getElementById('profile').onchange=e=>{state.profile=e.target.value;save();render()};
+window.signIn=async function(){const {data,error}=await SUPA.auth.signInWithPassword({email:document.getElementById('email').value,password:document.getElementById('pw').value}); if(error){alert(error.message);return;} CLOUD_USER=data.user; render();}
+window.signUp=async function(){const {data,error}=await SUPA.auth.signUp({email:document.getElementById('email').value,password:document.getElementById('pw').value}); if(error){alert(error.message);return;} alert('Account created. If email confirmation is enabled, confirm your email, then sign in.');}
+
+
+
+function weekStats(profile,week){
+  const p=PROGRAM.profiles[profile]; let totalSets=0,loggedSets=0,completed=0,workouts=0,exercises=[];
+  for(const day of daysOrder){
+    const d=p.days[day]; if(!d) continue; workouts++;
+    if(state.logs[`done|b${state.block}|${profile}|w${week}|${day}`]) completed++;
+    for(const ex of d.exercises){
+      totalSets+=ex.sets;
+      const l=state.logs[weekKey(profile,week,day,ex.name)];
+      const sets=l?.sets||[];
+      loggedSets+=sets.filter(s=>s.weight!==''||s.reps!=='').length;
+      if(sets.some(s=>s.weight!==''||s.reps!=='')) exercises.push({
+        day,name:ex.name,sets:sets.map((s,i)=>({set:i+1,weight:s.weight,reps:s.reps,rir:s.rir})),
+        note:l?.note||'',technique:techniqueFor(profile,week,ex.name)
+      });
+    }
+  }
+  return {totalSets,loggedSets,completed,workouts,exercises};
+}
+function buildWeeklyExport(profile,week){
+  const p=PROGRAM.profiles[profile], stats=weekStats(profile,week);
+  return JSON.stringify({
+    exportType:"Block Tracker Weekly Review",version:1,block:state.block,week,profile,
+    profileLabel:p.label,goal:p.goal,generatedAt:new Date().toISOString(),stats,
+    reviewPrompt:"Review this week's training objectively. Identify meaningful progression, stalls, unusual fatigue or execution issues, exercise-specific patterns, adherence, and selective programming adjustments for the following week. Do not rewrite the whole program unnecessarily. Preserve successful work and separate observations from recommendations."
+  },null,2);
+}
+function showWeeklyReview(){
+  const p=PROGRAM.profiles[state.profile],s=weekStats(state.profile,state.week);
+  document.getElementById('view').innerHTML=`
+    <h2>Week ${state.week} Review</h2>
+    <div class="sub">Create a controlled data package for your weekly ChatGPT review.</div>
+    <div class="historycard"><div class="stat">${esc(p.label)} • Block ${state.block} • Week ${state.week}</div>
+    <div class="meta"><span class="tag">${s.completed}/${s.workouts} workouts marked complete</span><span class="tag">${s.loggedSets}/${s.totalSets} sets logged</span><span class="tag">${s.exercises.length} exercises with data</span></div>
+    <div class="why"><b>Export includes:</b> set-by-set weight, reps, RIR, notes, techniques, week/block, and completion information.</div></div>
+    <div class="exercise"><h3>How you'll use it</h3>
+    <div class="why">1. Finish and log the week's workouts.</div><div class="why">2. Tap <b>Copy Review Data</b>.</div>
+    <div class="why">3. Paste it into our ChatGPT conversation.</div><div class="why">4. I'll review the week and make selective adjustments where warranted.</div></div>
+    <button class="btn primary" style="width:100%;margin:8px 0" onclick="copyWeeklyExport()">Copy Review Data</button>
+    <button class="btn" style="width:100%;margin:8px 0" onclick="downloadWeeklyExport()">Download .json</button>`;
+}
+window.copyWeeklyExport=async function(){
+  const text=buildWeeklyExport(state.profile,state.week);
+  try{await navigator.clipboard.writeText(text);alert('Weekly review data copied. Paste it into ChatGPT.');}
+  catch(e){const m=document.getElementById('modal');document.getElementById('modalBody').innerHTML='<h2>Copy failed</h2><textarea class="note" style="min-height:320px">'+esc(text)+'</textarea><div class="sub">Long-press the text and copy it.</div>';m.showModal();}
+}
+window.downloadWeeklyExport=function(){
+  const blob=new Blob([buildWeeklyExport(state.profile,state.week)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`block-${state.block}-${state.profile}-week-${state.week}-review.json`;a.click();
+}
 
 async function boot(){
   PROGRAM=await fetch('program.json').then(r=>r.json());
+  if(window.SUPABASE_CONFIG?.url && !window.SUPABASE_CONFIG.url.includes('PASTE_')){
+    SUPA=window.supabase.createClient(window.SUPABASE_CONFIG.url, window.SUPABASE_CONFIG.publishableKey);
+    const {data}=await SUPA.auth.getUser(); CLOUD_USER=data.user||null;
+    if(!CLOUD_USER){
+      document.getElementById('view').innerHTML='<div class="exercise"><h2>Sign in to sync</h2><div class="why">Cloud sync keeps your training history available across devices. Create/sign in with an email and password.</div><input id="email" type="email" placeholder="Email" style="width:100%;margin:6px 0"><input id="pw" type="password" placeholder="Password" style="width:100%;margin:6px 0"><button class="btn primary" style="width:100%;margin:6px 0" onclick="signIn()">Sign In</button><button class="btn" style="width:100%;margin:6px 0" onclick="signUp()">Create Account</button><div class="sub">Use a separate account for each person.</div></div>';
+      return;
+    }
+  }
   render();
   if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 }
