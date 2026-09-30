@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#111827"/>
+<link rel="manifest" href="manifest.webmanifest"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<title>Block Tracker</title>
+<style>
+:root{--bg:#0b1020;--card:#151c2f;--muted:#93a4bd;--text:#f8fafc;--accent:#7dd3fc;--good:#86efac;--warn:#facc15;--border:#26324b}
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#0b1020,#101827 55%,#0b1020);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{max-width:760px;margin:auto;padding:18px 14px 96px}
+.top{position:sticky;top:0;z-index:10;background:rgba(11,16,32,.92);backdrop-filter:blur(12px);padding:10px 0 12px;border-bottom:1px solid var(--border)}
+.row{display:flex;gap:10px;align-items:center}.spread{justify-content:space-between}.pill,.btn,select,input,textarea{border:1px solid var(--border);background:#11182a;color:var(--text);border-radius:12px}
+.btn{padding:12px 14px;font-weight:700}.btn.primary{background:#e2e8f0;color:#0f172a;border:0}.btn.small{padding:8px 10px;font-size:13px}.btn:active{transform:scale(.98)}
+select,input{padding:10px 11px;font-size:16px}.week-nav{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:12px}.week-btn{padding:9px 4px;border-radius:10px;border:1px solid var(--border);background:#11182a;color:var(--muted)}.week-btn.active{background:#e2e8f0;color:#111827}
+h1{font-size:24px;margin:10px 0 2px}h2{font-size:19px;margin:22px 0 10px}.sub{color:var(--muted);font-size:14px}
+.daycard,.exercise,.historycard{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:14px;margin:12px 0}
+.daycard.active{outline:2px solid #334155}.daytitle{font-size:18px;font-weight:800}.shared{font-size:12px;color:var(--accent)}
+.exercise h3{margin:0 0 6px;font-size:18px}.meta{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}.tag{font-size:12px;background:#0f172a;border:1px solid #334155;border-radius:999px;padding:5px 8px;color:#cbd5e1}.tech{color:#0f172a;background:#fde68a;border:0}
+.setgrid{display:grid;grid-template-columns:58px 1fr 1fr 1fr;gap:7px;align-items:center;margin:8px 0}.setgrid input{width:100%;min-width:0}.setlabel{color:var(--muted);font-size:13px}
+.note{width:100%;min-height:54px;padding:10px;font-size:14px;margin-top:6px}
+.video{display:inline-block;margin-top:8px;color:var(--accent);text-decoration:none;font-weight:700}.why{font-size:13px;color:#cbd5e1;margin:7px 0}.why b{color:#fff}
+.footerbar{position:fixed;bottom:0;left:0;right:0;background:rgba(11,16,32,.95);border-top:1px solid var(--border);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;justify-content:center}.footerbar .btn{flex:1;max-width:240px}
+.hidden{display:none}.empty{padding:24px;text-align:center;color:var(--muted)}.stat{font-weight:800}.muted{color:var(--muted)}.danger{color:#fecaca}
+dialog{background:#101827;color:white;border:1px solid var(--border);border-radius:18px;max-width:680px;width:92%}dialog::backdrop{background:rgba(0,0,0,.6)}
+pre{white-space:pre-wrap;word-wrap:break-word}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="row spread">
+      <div>
+        <h1>Block Tracker</h1>
+        <div class="sub" id="goal"></div>
+      </div>
+      <select id="profile">
+        <option value="you">You</option>
+        <option value="her">Her</option>
+      </select>
+    </div>
+    <div class="week-nav" id="weekNav"></div>
+  </div>
+
+  <div id="view"></div>
+</div>
+
+<div class="footerbar">
+  <button class="btn" id="historyBtn">History</button>
+  <button class="btn primary" id="homeBtn">Workouts</button>
+  <button class="btn" id="techBtn">Techniques</button>
+</div>
+
+<dialog id="modal">
+  <div id="modalBody"></div>
+  <form method="dialog"><button class="btn primary" style="width:100%;margin-top:12px">Close</button></form>
+</dialog>
+
+<script>
+let PROGRAM=null;
+const SKEY='blockTrackerStateV1';
+const state=JSON.parse(localStorage.getItem(SKEY)||'{}');
+state.profile ||= 'you'; state.week ||= 1; state.logs ||= {}; state.block ||= 1;
+const daysOrder=['Monday','Wednesday','Friday','Saturday','Sunday'];
+
+function save(){localStorage.setItem(SKEY,JSON.stringify(state))}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function weekKey(profile,week,day,ex){return `b${state.block}|${profile}|w${week}|${day}|${ex}`}
+function techniqueFor(profile,week,name){
+  const map=PROGRAM.profiles[profile].techniques[String(week)]||PROGRAM.profiles[profile].techniques[week]||{};
+  return map[name]||'';
+}
+function renderWeeks(){
+  const nav=document.getElementById('weekNav'); nav.innerHTML='';
+  for(let w=1;w<=PROGRAM.weeks;w++){
+    const b=document.createElement('button'); b.className='week-btn'+(w===state.week?' active':''); b.textContent=`W${w}`;
+    b.onclick=()=>{state.week=w;save();render()}; nav.appendChild(b);
+  }
+}
+function render(){
+  document.getElementById('profile').value=state.profile;
+  document.getElementById('goal').textContent=`Block ${state.block} • ${PROGRAM.profiles[state.profile].goal}`;
+  renderWeeks(); showWorkouts();
+}
+function showWorkouts(){
+  const p=PROGRAM.profiles[state.profile];
+  let out=`<h2>Week ${state.week}</h2><div class="sub">Tap a day, enter weight × reps, and save when you finish.</div>`;
+  for(const day of daysOrder){
+    const d=p.days[day]; if(!d) continue;
+    out+=`<div class="daycard"><div class="row spread"><div><div class="daytitle">${day} — ${esc(d.title)}</div>${d.shared?'<div class="shared">Shared workout</div>':''}</div><button class="btn small" onclick="openDay('${day}')">Open</button></div></div>`;
+  }
+  document.getElementById('view').innerHTML=out;
+}
+function openDay(day){
+  const p=PROGRAM.profiles[state.profile], d=p.days[day];
+  let out=`<div class="row spread"><div><h2>${day} — ${esc(d.title)}</h2><div class="sub">Week ${state.week}${d.shared?' • Shared workout':''}</div></div><button class="btn small" onclick="showWorkouts()">Back</button></div>`;
+  d.exercises.forEach((ex,idx)=>{
+    const key=weekKey(state.profile,state.week,day,ex.name);
+    const log=state.logs[key]||{sets:Array(ex.sets).fill(null).map(()=>({weight:'',reps:'',rir:''})),note:''};
+    const tech=techniqueFor(state.profile,state.week,ex.name);
+    out+=`<div class="exercise">
+      <h3>${esc(ex.name)}</h3>
+      <div class="meta"><span class="tag">${ex.sets} sets</span><span class="tag">${esc(ex.reps)}</span><span class="tag">${esc(ex.rest)}</span><span class="tag">${esc(ex.rir)}</span>${tech?`<span class="tag tech">${esc(tech)}</span>`:''}</div>
+      ${ex.why?`<div class="why"><b>Why:</b> ${esc(ex.why)}</div><div class="why"><b>Goal:</b> ${esc(ex.goal)}</div>`:''}
+      <a class="video" href="${ex.video}" target="_blank" rel="noopener">▶ Video demo</a>
+      <div class="setgrid"><div></div><div class="setlabel">Weight</div><div class="setlabel">Reps</div><div class="setlabel">RIR</div>`;
+    for(let s=0;s<ex.sets;s++){
+      const v=log.sets[s]||{weight:'',reps:'',rir:''};
+      out+=`<div class="setlabel">Set ${s+1}</div>
+        <input inputmode="decimal" value="${esc(v.weight)}" onchange="upd('${key}',${s},'weight',this.value)" placeholder="lb">
+        <input inputmode="numeric" value="${esc(v.reps)}" onchange="upd('${key}',${s},'reps',this.value)" placeholder="reps">
+        <input inputmode="decimal" value="${esc(v.rir)}" onchange="upd('${key}',${s},'rir',this.value)" placeholder="RIR">`;
+    }
+    out+=`</div><textarea class="note" onchange="updNote('${key}',this.value)" placeholder="Notes">${esc(log.note)}</textarea>`;
+    const prev=findPrevious(day,ex.name);
+    if(prev) out+=`<div class="why"><b>Previous:</b> ${esc(prev)}</div>`;
+    out+=`</div>`;
+  });
+  out+=`<button class="btn primary" style="width:100%;margin:14px 0" onclick="finishDay('${day}')">Save completed workout</button>`;
+  document.getElementById('view').innerHTML=out;
+}
+window.openDay=openDay; window.showWorkouts=showWorkouts;
+function ensureLog(key, sets=2){state.logs[key] ||= {sets:Array(sets).fill(null).map(()=>({weight:'',reps:'',rir:''})),note:''}}
+window.upd=function(key,s,field,val){ensureLog(key,s+1); while(state.logs[key].sets.length<=s)state.logs[key].sets.push({weight:'',reps:'',rir:''}); state.logs[key].sets[s][field]=val; save()}
+window.updNote=function(key,val){ensureLog(key); state.logs[key].note=val; save()}
+function findPrevious(day,name){
+  for(let w=state.week-1;w>=1;w--){
+    const k=weekKey(state.profile,w,day,name), l=state.logs[k];
+    if(l && l.sets.some(s=>s.weight||s.reps)){
+      return l.sets.map((s,i)=>`S${i+1} ${s.weight||'—'}×${s.reps||'—'}${s.rir!==''?` @${s.rir}RIR`:''}`).join(' | ');
+    }
+  }
+  return '';
+}
+window.finishDay=function(day){
+  const key=`done|b${state.block}|${state.profile}|w${state.week}|${day}`;
+  state.logs[key]={completedAt:new Date().toISOString()}; save();
+  alert('Workout saved.');
+}
+function showHistory(){
+  let rows=[];
+  for(const day of daysOrder){
+    const d=PROGRAM.profiles[state.profile].days[day]; if(!d)continue;
+    for(const ex of d.exercises){
+      for(let w=1;w<=PROGRAM.weeks;w++){
+        const k=weekKey(state.profile,w,day,ex.name), l=state.logs[k];
+        if(l && l.sets.some(s=>s.weight||s.reps)) rows.push({w,day,name:ex.name,sets:l.sets});
+      }
+    }
+  }
+  let out=`<h2>History</h2>`;
+  if(!rows.length) out+=`<div class="empty">No logged sets yet.</div>`;
+  else rows.reverse().forEach(r=>{out+=`<div class="historycard"><div class="stat">W${r.w} • ${r.day} • ${esc(r.name)}</div><div class="sub">${r.sets.map((s,i)=>`S${i+1}: ${esc(s.weight||'—')}×${esc(s.reps||'—')}${s.rir!==''?` @${esc(s.rir)} RIR`:''}`).join(' • ')}</div></div>`});
+  document.getElementById('view').innerHTML=out;
+}
+function showTech(){
+  let out=`<h2>Intensity techniques</h2>`;
+  Object.entries(PROGRAM.techniqueKey).forEach(([k,v])=>out+=`<div class="exercise"><h3>${esc(k)}</h3><div class="why">${esc(v)}</div></div>`);
+  out+=`<div class="exercise"><h3>Block updates</h3><div class="why">This app is built around training blocks. A future Block 2 can use different exercises, rep ranges, or techniques while your Block 1 history stays saved on this device.</div></div>`;
+  document.getElementById('view').innerHTML=out;
+}
+document.getElementById('historyBtn').onclick=showHistory;
+document.getElementById('homeBtn').onclick=showWorkouts;
+document.getElementById('techBtn').onclick=showTech;
+document.getElementById('profile').onchange=e=>{state.profile=e.target.value;save();render()};
+
+async function boot(){
+  PROGRAM=await fetch('program.json').then(r=>r.json());
+  render();
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+}
+boot();
+</script>
+</body></html>

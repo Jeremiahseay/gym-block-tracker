@@ -1,0 +1,692 @@
+{
+  "profiles": {
+    "you": {
+      "label": "You",
+      "goal": "Bulk / hypertrophy",
+      "days": {
+        "Monday": {
+          "title": "Chest + Triceps A",
+          "shared": false,
+          "exercises": [
+            {
+              "name": "Smith Machine Bench Press",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2.5\u20133 min",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=Smith+machine+bench+press+proper+form"
+            },
+            {
+              "name": "Incline Machine Press",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2\u20133 min",
+              "rir": "~1 RIR",
+              "video": "https://www.youtube.com/results?search_query=incline+machine+press+proper+form"
+            },
+            {
+              "name": "Cable Pec Fly",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90\u2013120 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=cable+pec+fly+proper+form"
+            },
+            {
+              "name": "Triceps Pressdown",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "90 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=triceps+pressdown+proper+form"
+            },
+            {
+              "name": "Overhead Cable Triceps Extension",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=overhead+cable+triceps+extension+proper+form"
+            }
+          ]
+        },
+        "Wednesday": {
+          "title": "Back + Biceps A",
+          "shared": true,
+          "exercises": [
+            {
+              "name": "Pull-Up",
+              "sets": 4,
+              "reps": "quality reps",
+              "rest": "2\u20133 min",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=pull+up+proper+form"
+            },
+            {
+              "name": "Chest-Supported Row",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2 min",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=chest+supported+row+proper+form"
+            },
+            {
+              "name": "Lat Pulldown",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2 min",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=lat+pulldown+proper+form"
+            },
+            {
+              "name": "Seated Cable Row",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "90\u2013120 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=seated+cable+row+proper+form"
+            },
+            {
+              "name": "Face Pull",
+              "sets": 2,
+              "reps": "12\u201320",
+              "rest": "60\u201390 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/watch?v=eTCBSFlCJ_s"
+            },
+            {
+              "name": "Incline Dumbbell Curl",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "90\u2013120 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=incline+dumbbell+curl+proper+form"
+            },
+            {
+              "name": "Cable Curl",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "60\u201390 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=cable+bicep+curl+proper+form"
+            }
+          ]
+        },
+        "Friday": {
+          "title": "Legs",
+          "shared": true,
+          "exercises": [
+            {
+              "name": "Leg Press",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2\u20133 min",
+              "rir": "2 RIR",
+              "video": "https://www.youtube.com/results?search_query=leg+press+proper+form"
+            },
+            {
+              "name": "Romanian Deadlift",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2\u20133 min",
+              "rir": "~2 RIR",
+              "video": "https://www.youtube.com/results?search_query=Romanian+deadlift+proper+form"
+            },
+            {
+              "name": "Seated Leg Curl",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90\u2013120 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=seated+leg+curl+proper+form"
+            },
+            {
+              "name": "Leg Extension",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=leg+extension+proper+form"
+            },
+            {
+              "name": "Calf Raise",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "60\u201390 sec",
+              "rir": "~1 RIR",
+              "video": "https://www.youtube.com/results?search_query=calf+raise+machine+proper+form"
+            }
+          ]
+        },
+        "Saturday": {
+          "title": "Chest + Triceps B",
+          "shared": false,
+          "exercises": [
+            {
+              "name": "Incline Smith Machine Press",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2.5\u20133 min",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=incline+Smith+machine+press+proper+form"
+            },
+            {
+              "name": "Machine Chest Press",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2 min",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=machine+chest+press+proper+form"
+            },
+            {
+              "name": "Cable Pec Fly",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90\u2013120 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=cable+pec+fly+proper+form"
+            },
+            {
+              "name": "Overhead Cable Triceps Extension",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=overhead+cable+triceps+extension+proper+form"
+            },
+            {
+              "name": "Triceps Pressdown",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "90 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=triceps+pressdown+proper+form"
+            }
+          ]
+        },
+        "Sunday": {
+          "title": "Back + Biceps B",
+          "shared": true,
+          "exercises": [
+            {
+              "name": "Pull-Up",
+              "sets": 4,
+              "reps": "quality reps",
+              "rest": "2\u20133 min",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=pull+up+proper+form"
+            },
+            {
+              "name": "Single-Arm Cable Row",
+              "sets": 2,
+              "reps": "8\u201312/side",
+              "rest": "90\u2013120 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=single+arm+cable+row+proper+form"
+            },
+            {
+              "name": "Neutral-Grip Lat Pulldown",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2 min",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=neutral+grip+lat+pulldown+proper+form"
+            },
+            {
+              "name": "Straight-Arm Cable Pulldown",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "60\u201390 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=straight+arm+cable+pulldown+proper+form"
+            },
+            {
+              "name": "Face Pull",
+              "sets": 2,
+              "reps": "12\u201320",
+              "rest": "60\u201390 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/watch?v=eTCBSFlCJ_s"
+            },
+            {
+              "name": "Preacher Curl",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "90\u2013120 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=preacher+curl+proper+form"
+            },
+            {
+              "name": "Hammer Curl",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "60\u201390 sec",
+              "rir": "~1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=hammer+curl+proper+form"
+            }
+          ]
+        }
+      },
+      "techniques": {
+        "3": {
+          "Cable Pec Fly": "Drop set",
+          "Cable Curl": "Rest-pause",
+          "Triceps Pressdown": "Rest-pause",
+          "Face Pull": "Myo-reps"
+        },
+        "4": {
+          "Cable Pec Fly": "Drop set",
+          "Cable Curl": "Rest-pause",
+          "Triceps Pressdown": "Rest-pause",
+          "Face Pull": "Myo-reps",
+          "Seated Leg Curl": "Myo-reps"
+        },
+        "5": {
+          "Machine Chest Press": "Rest-pause",
+          "Cable Pec Fly": "Drop set",
+          "Cable Curl": "Rest-pause",
+          "Triceps Pressdown": "Rest-pause",
+          "Leg Extension": "Drop set",
+          "Straight-Arm Cable Pulldown": "Rest-pause"
+        },
+        "6": {
+          "Cable Pec Fly": "Drop set",
+          "Cable Curl": "Rest-pause",
+          "Triceps Pressdown": "Rest-pause",
+          "Face Pull": "Myo-reps"
+        }
+      }
+    },
+    "her": {
+      "label": "Her",
+      "goal": "Body composition / lower-body emphasis",
+      "days": {
+        "Monday": {
+          "title": "Full Body A",
+          "shared": false,
+          "exercises": [
+            {
+              "name": "Leg Press",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "2 min",
+              "rir": "2\u20133 RIR",
+              "video": "https://www.youtube.com/results?search_query=leg+press+proper+form",
+              "why": "Build lower-body strength and overall leg muscle with a stable setup.",
+              "goal": "Controlled depth, steady knee tracking and progressive loading."
+            },
+            {
+              "name": "Squat",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2\u20133 min",
+              "rir": "2\u20133 RIR",
+              "video": "https://www.youtube.com/results?search_query=squat+proper+form",
+              "why": "Develop coordinated lower-body strength and confidence through a squat pattern.",
+              "goal": "Smooth reps, stable bracing and a comfortable pain-free range."
+            },
+            {
+              "name": "Romanian Deadlift",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2\u20133 min",
+              "rir": "2\u20133 RIR",
+              "video": "https://www.youtube.com/results?search_query=Romanian+deadlift+proper+form",
+              "why": "Train glutes and hamstrings while reinforcing the hip hinge.",
+              "goal": "Feel the posterior chain lengthen under control; keep the spine stable."
+            },
+            {
+              "name": "Machine Shoulder Press",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2 min",
+              "rir": "~2 RIR",
+              "video": "https://www.youtube.com/results?search_query=machine+shoulder+press+proper+form",
+              "why": "Build shoulder pressing strength and upper-body muscle with a stable path.",
+              "goal": "Controlled pressing without turning it into a full-body effort."
+            },
+            {
+              "name": "Hip Abductor",
+              "sets": 2,
+              "reps": "12\u201320",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=hip+abductor+machine+proper+form",
+              "why": "Directly train the outer hip/glute musculature.",
+              "goal": "Feel the target muscles working rather than swinging the stack."
+            },
+            {
+              "name": "Ab Crunch Machine",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=ab+crunch+machine+proper+form",
+              "why": "Train abdominal strength with controlled resistance.",
+              "goal": "Curl through the trunk rather than simply moving the weight."
+            }
+          ]
+        },
+        "Wednesday": {
+          "title": "Back + Biceps",
+          "shared": true,
+          "exercises": [
+            {
+              "name": "Pull-Up",
+              "sets": 4,
+              "reps": "clean reps",
+              "rest": "2\u20133 min",
+              "rir": "~2 RIR",
+              "video": "https://www.youtube.com/results?search_query=pull+up+proper+form",
+              "why": "Build back and arm strength while improving pulling skill.",
+              "goal": "Clean reps and controlled shoulder movement; assistance is fine."
+            },
+            {
+              "name": "Chest-Supported Row",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90\u2013120 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=chest+supported+row+proper+form",
+              "why": "Build upper/mid-back thickness without relying heavily on the lower back.",
+              "goal": "Drive elbows back and keep tension in the back."
+            },
+            {
+              "name": "Lat Pulldown",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90\u2013120 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=lat+pulldown+proper+form",
+              "why": "Build vertical pulling strength and lat development.",
+              "goal": "Pull with the elbows and control the return."
+            },
+            {
+              "name": "Seated Cable Row",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90\u2013120 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=seated+cable+row+proper+form",
+              "why": "Add horizontal pulling volume for back development.",
+              "goal": "Stable torso and full controlled reach/row."
+            },
+            {
+              "name": "Face Pull",
+              "sets": 2,
+              "reps": "12\u201320",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/watch?v=eTCBSFlCJ_s",
+              "why": "Train rear delts/upper back and reinforce shoulder control.",
+              "goal": "Feel upper-back/rear-delt tension without turning it into a heavy row."
+            },
+            {
+              "name": "Cable Curl",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=cable+bicep+curl+proper+form",
+              "why": "Direct biceps work with consistent cable tension.",
+              "goal": "Control both directions and keep the upper arm stable."
+            }
+          ]
+        },
+        "Friday": {
+          "title": "Lower Body",
+          "shared": true,
+          "exercises": [
+            {
+              "name": "Leg Press",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "2 min",
+              "rir": "2\u20133 RIR",
+              "video": "https://www.youtube.com/results?search_query=leg+press+proper+form",
+              "why": "Build lower-body strength and overall leg muscle with a stable setup.",
+              "goal": "Controlled depth, steady knee tracking and progressive loading."
+            },
+            {
+              "name": "Squat",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2\u20133 min",
+              "rir": "2\u20133 RIR",
+              "video": "https://www.youtube.com/results?search_query=squat+proper+form",
+              "why": "Develop coordinated lower-body strength and confidence through a squat pattern.",
+              "goal": "Smooth reps, stable bracing and a comfortable pain-free range."
+            },
+            {
+              "name": "Romanian Deadlift",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2\u20133 min",
+              "rir": "2\u20133 RIR",
+              "video": "https://www.youtube.com/results?search_query=Romanian+deadlift+proper+form",
+              "why": "Train glutes and hamstrings while reinforcing the hip hinge.",
+              "goal": "Feel the posterior chain lengthen under control; keep the spine stable."
+            },
+            {
+              "name": "Seated Leg Curl",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=seated+leg+curl+proper+form",
+              "why": "Directly train the hamstrings through knee flexion.",
+              "goal": "Controlled squeeze and lengthened return."
+            },
+            {
+              "name": "Leg Extension",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=leg+extension+proper+form",
+              "why": "Directly train the quadriceps with a stable machine setup.",
+              "goal": "Controlled extension and smooth return; no jerking."
+            },
+            {
+              "name": "Hip Abductor",
+              "sets": 2,
+              "reps": "12\u201320",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=hip+abductor+machine+proper+form",
+              "why": "Directly train the outer hip/glute musculature.",
+              "goal": "Feel the target muscles working rather than swinging the stack."
+            },
+            {
+              "name": "Hip Adductor",
+              "sets": 2,
+              "reps": "12\u201320",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=hip+adductor+machine+proper+form",
+              "why": "Train the inner-thigh/adductor musculature.",
+              "goal": "Controlled range and no bouncing."
+            }
+          ]
+        },
+        "Saturday": {
+          "title": "Full Body B",
+          "shared": false,
+          "exercises": [
+            {
+              "name": "Leg Press",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "2 min",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=leg+press+proper+form",
+              "why": "Build lower-body strength and overall leg muscle with a stable setup.",
+              "goal": "Controlled depth, steady knee tracking and progressive loading."
+            },
+            {
+              "name": "Kettlebell Swing",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90 sec",
+              "rir": "2\u20133 RIR",
+              "video": "https://www.youtube.com/results?search_query=kettlebell+swing+proper+form",
+              "why": "Develop hip power and reinforce the hinge pattern.",
+              "goal": "Hips drive the bell; arms guide it rather than lifting it."
+            },
+            {
+              "name": "Kettlebell March",
+              "sets": 2,
+              "reps": "30\u201345 sec",
+              "rest": "60\u201390 sec",
+              "rir": "controlled",
+              "video": "https://www.youtube.com/results?search_query=kettlebell+march+proper+form",
+              "why": "Train trunk stability, balance and loaded hip control.",
+              "goal": "Tall posture and deliberate steps."
+            },
+            {
+              "name": "Machine Shoulder Press",
+              "sets": 2,
+              "reps": "8\u201312",
+              "rest": "2 min",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=machine+shoulder+press+proper+form",
+              "why": "Build shoulder pressing strength and upper-body muscle with a stable path.",
+              "goal": "Controlled pressing without turning it into a full-body effort."
+            },
+            {
+              "name": "Hip Abductor",
+              "sets": 2,
+              "reps": "12\u201320",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=hip+abductor+machine+proper+form",
+              "why": "Directly train the outer hip/glute musculature.",
+              "goal": "Feel the target muscles working rather than swinging the stack."
+            },
+            {
+              "name": "Leg Lift / Ab Machine",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=ab+leg+raise+machine+proper+form",
+              "why": "Train the abdominal/hip-flexion pattern with controlled resistance.",
+              "goal": "Keep the movement deliberate and avoid swinging."
+            },
+            {
+              "name": "Ab Crunch Machine",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=ab+crunch+machine+proper+form",
+              "why": "Train abdominal strength with controlled resistance.",
+              "goal": "Curl through the trunk rather than simply moving the weight."
+            }
+          ]
+        },
+        "Sunday": {
+          "title": "Back + Biceps",
+          "shared": true,
+          "exercises": [
+            {
+              "name": "Pull-Up",
+              "sets": 4,
+              "reps": "clean reps",
+              "rest": "2\u20133 min",
+              "rir": "~2 RIR",
+              "video": "https://www.youtube.com/results?search_query=pull+up+proper+form",
+              "why": "Build back and arm strength while improving pulling skill.",
+              "goal": "Clean reps and controlled shoulder movement; assistance is fine."
+            },
+            {
+              "name": "Single-Arm Cable Row",
+              "sets": 2,
+              "reps": "10\u201315/side",
+              "rest": "90 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=single+arm+cable+row+proper+form",
+              "why": "Build unilateral back strength and side-to-side control.",
+              "goal": "Stable torso and deliberate elbow drive."
+            },
+            {
+              "name": "Neutral-Grip Lat Pulldown",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90\u2013120 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=neutral+grip+lat+pulldown+proper+form",
+              "why": "Train the lats with a neutral grip and add pulling variety.",
+              "goal": "Controlled stretch and elbow-driven pull."
+            },
+            {
+              "name": "Straight-Arm Cable Pulldown",
+              "sets": 2,
+              "reps": "12\u201315",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=straight+arm+cable+pulldown+proper+form",
+              "why": "Isolate the lats without making the biceps the limiter.",
+              "goal": "Keep arms mostly straight and feel the lats control the movement."
+            },
+            {
+              "name": "Face Pull",
+              "sets": 2,
+              "reps": "12\u201320",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/watch?v=eTCBSFlCJ_s",
+              "why": "Train rear delts/upper back and reinforce shoulder control.",
+              "goal": "Feel upper-back/rear-delt tension without turning it into a heavy row."
+            },
+            {
+              "name": "Preacher Curl",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "90 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=preacher+curl+proper+form",
+              "why": "Direct biceps work with the upper arm supported to limit momentum.",
+              "goal": "Controlled stretch and curl without lifting the shoulder."
+            },
+            {
+              "name": "Hammer Curl",
+              "sets": 2,
+              "reps": "10\u201315",
+              "rest": "60\u201390 sec",
+              "rir": "1\u20132 RIR",
+              "video": "https://www.youtube.com/results?search_query=hammer+curl+proper+form",
+              "why": "Train elbow flexors with a neutral grip.",
+              "goal": "Neutral wrist and controlled reps."
+            }
+          ]
+        }
+      },
+      "techniques": {
+        "4": {
+          "Hip Abductor": "Myo-reps",
+          "Cable Curl": "Myo-reps",
+          "Face Pull": "Myo-reps"
+        },
+        "5": {
+          "Leg Extension": "Drop set",
+          "Seated Leg Curl": "Myo-reps",
+          "Hip Abductor": "Drop set"
+        },
+        "6": {
+          "Leg Extension": "Drop set",
+          "Seated Leg Curl": "Myo-reps",
+          "Hip Abductor": "Myo-reps",
+          "Cable Curl": "Myo-reps",
+          "Face Pull": "Myo-reps"
+        }
+      }
+    }
+  },
+  "weeks": 6,
+  "techniqueKey": {
+    "Drop set": "Primary set at ~0\u20131 RIR, reduce load 20\u201330%, then 5\u201310 controlled reps to technical failure. One drop only.",
+    "Rest-pause": "Primary set at ~0\u20131 RIR, rest 15\u201320 sec, perform 3\u20135 reps, rest 15\u201320 sec, then 2\u20134 reps or stop when technique breaks.",
+    "Myo-reps": "Activation set 12\u201320 reps at ~1 RIR, rest 15\u201320 sec, then repeat 3\u20135-rep mini-sets with 15\u201320 sec rests until the minimum clean-rep target is missed."
+  }
+}
